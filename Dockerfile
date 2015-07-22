@@ -34,7 +34,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
 USER app
 
 RUN mkdir -p /home/app/syncserver
-ADD Makefile *.ini *.wsgi *.rst *.txt *.py /home/app/syncserver/
+ADD Makefile *.ini *.wsgi *.rst *.txt *.py syncserver.ini.docker run.sh /home/app/syncserver/
 ADD ./syncserver/ /home/app/syncserver/syncserver/
 WORKDIR /home/app/syncserver
 
@@ -44,5 +44,4 @@ RUN make build
 
 EXPOSE 5000
 
-ENTRYPOINT ["/usr/bin/make"]
-CMD ["serve"]
+ENTRYPOINT ["/home/app/syncserver/run.sh"]
